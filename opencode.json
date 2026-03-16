@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "research-agent": {
+      "description": "Research Agent - 现场供电服务研究",
+      "mode": "primary",
+      "prompt": "{file:./agents/research/AGENTS.md}",
+      "skills": [
+        "literature-review",
+        "observation",
+        "quality-gate",
+        "theory-building",
+        "web-search",
+        "file-reading",
+        "document-output"
+      ]
+    }
+  }
+}
