@@ -44,20 +44,61 @@ skills:
 
 ---
 
-## 📚 多课题管理
+## 📚 课题管理
 
-### 研究课题初始化
+### 目录结构原则
 
-**重要**：Research Agent支持多个研究课题管理。
+**核心原则**：
+- `agents/` 只放Agent定义（AGENTS.md, skills/, init.md）
+- `research/` 放所有研究内容（topic, observations, theory等）
 
-**初始化流程**：
+### 两种模式
+
+**单课题模式**：
+```
+research/
+├── registry.md           # 课题注册表
+├── current-topic.md      # 当前课题引用
+├── topic.md              # 课题定义
+├── catch-up.md           # 追更文档
+├── session-log.md        # 会话日志
+├── observations/         # 观察笔记
+├── retrievals/           # 检索报告
+├── theory/               # 理论文档
+└── reflections/          # 反思笔记
+```
+
+**多课题模式**：
+```
+research/
+├── registry.md           # 课题注册表（所有课题概览）
+├── current-topic.md      # 当前激活课题引用
+└── topics/
+    ├── topic-1/          # 课题1（完整文档体系）
+    │   ├── topic.md
+    │   ├── catch-up.md
+    │   ├── session-log.md
+    │   ├── observations/
+    │   ├── theory/
+    │   └── ...
+    └── topic-2/          # 课题2
+        └── ...
+```
+
+### 初始化流程
+
 1. 阅读 [init.md](init.md) 了解课题管理机制
-2. 创建研究课题配置（`research-topics/[topic-name].md`）
-3. 激活研究课题（更新 `current-topic.md`）
-4. 开始研究循环
+2. 创建研究课题配置
+   - 单课题：`research/topic.md`
+   - 多课题：`research/topics/[topic-name]/topic.md`
+3. 更新课题注册表 `research/registry.md`
+4. 激活研究课题（更新 `research/current-topic.md`）
+5. 开始研究循环
 
-**当前研究课题**：
-- 查看 `current-topic.md` 了解当前激活的课题
+### 当前研究课题
+
+- 查看 `research/registry.md` 了解所有课题概览
+- 查看 `research/current-topic.md` 了解当前激活的课题
 - 或询问："当前研究课题是什么？"
 
 ---
@@ -114,74 +155,46 @@ R - Reflect（反思迭代）：持续优化方法
 - 检索报告（retrievals/）
 - 理论文档（theory/）
 - 反思笔记（reflections/）
-
-**使用模板**：参考 `templates/` 目录
-
-### 3. 文档化能力（不可分离）
-
-**标准产出**：
-- 观察笔记（observations/）
-- 检索报告（retrievals/）
-- 理论文档（theory/）
-- 反思笔记（reflections/）
 - 会话日志（session-log.md）
+- 追更文档（catch-up.md）
+
+**位置**：
+- 单课题：直接在 `research/` 目录下
+- 多课题：在 `research/topics/[topic-name]/` 目录下
 
 **使用模板**：参考 `templates/` 目录
 
 ---
 
-## 📖 可加载能力
+## 📖 可加载能力（Skills）
 
-### Skills（业务能力）
+按需加载的专业能力，定义在 `skills/` 目录。详见 [Skills库索引](skills/README.md)。
 
-按需加载的业务能力，定义在 `skills/` 目录。
+### 可用技能
 
 | 技能 | 用途 | 使用场景 |
 |------|------|----------|
-| [文献检索](skills/literature-review/SKILL.md) | 系统化检索和分析文献 | 调研现有研究 |
-| [观察能力](skills/observation/SKILL.md) | 系统化观察和记录 | 从实践中发现模式 |
-| [理论构建](skills/theory-building/SKILL.md) | 构建和验证理论框架 | 提出新理论 |
-| [质量门控](skills/quality-gate/SKILL.md) | 评估研究质量 | 判断研究结论 |
+| [文献检索](skills/literature-review.md) | 系统化检索和分析文献 | 调研现有研究 |
+| [观察能力](skills/observation.md) | 系统化观察和记录 | 从实践中发现模式 |
+| [理论构建](skills/theory-building.md) | 构建和验证理论框架 | 提出新理论 |
+| [质量门控](skills/quality-gate.md) | 评估研究质量 | 判断研究结论 |
+| [百度搜索](skills/baidu-search.md) | 实时信息检索 | 搜索新闻、技术文档 |
 
-### Tools（底层工具）
+---
 
-底层可执行工具，定义在 `tools/` 目录。详见 [Tools库索引](tools/README.md)。
+## 📂 文件阅读能力
 
-| 工具 | 用途 | 状态 | 触发条件 |
-|------|------|:----:|---------|
-| [百度搜索](tools/baidu-search/SKILL.md) | 百度AI搜索（全球下载量第一） | ✅ | "百度搜索"、"全网搜索" |
-| [百度学术](tools/baidu-scholar-search/SKILL.md) | 百度学术文献检索 | ✅ | "学术搜索"、"论文搜索" |
-| [百度百科](tools/baidu-baike-data/SKILL.md) | 百度百科 词条查询 | ✅ | "百科查询"、"词条解释" |
-| [文档解析](tools/paddleocr-doc-parsing/SKILL.md) | 高级文档解析（表格、公式、图表） | ⚠️ | "解析文档"、"提取表格/公式" |
-| [文字识别](tools/paddleocr-text-recognition/SKILL.md) | 图像/PDF文字识别 | ⚠️ | "识别文字"、"OCR"、"提取文字" |
-| [异步OCR](tools/paddleocr-async/SKILL.md) | PaddleOCR异步API调用 | ✅ | "异步OCR"、"大文件识别" |
-| [文件阅读](tools/file-reading/SKILL.md) | 读取PDF/Word/Excel等 | 🚧 | "读取"、"解析"文件 |
-| [文档输出](tools/document-output/SKILL.md) | 生成格式化文档 | 🚧 | "生成报告"、"输出文档" |
+使用共享工具仓库 [shared-tools](https://github.com/Sonnet0524/shared-tools) 读取各类文件：
 
-**状态说明**：
-- ✅ 已测试 - 功能正常，可直接使用
-- ⚠️ 待测试 - 需要API配置（[专属URL获取指南](../../API_KEYS_SETUP.md#paddleocr_ocr_api_url)）
-- 🚧 建设中 - 脚本待实现，功能受限
+```python
+import sys
+sys.path.insert(0, r'D:\opencode\github\shared-tools')
 
-### Skills vs Tools
-
-```
-Skills (业务能力)
-    ↓ 指导方法论
-    ↓ 可调用
-Tools (底层工具)
-    ↓ 执行代码
-外部API / 文件系统
+from read_excel import read_excel, read_excel_as_markdown
+from read_docx import read_docx, read_docx_as_markdown
 ```
 
-**协作示例**：
-```
-literature-review (Skill)
-    ↓ 调用
-baidu-scholar-search (Tool)
-    ↓ 执行
-百度学术API
-```
+支持的格式：`.xlsx`, `.xlsm`, `.xls`, `.et`, `.docx`
 
 ---
 
@@ -246,18 +259,21 @@ baidu-scholar-search (Tool)
 ### 启动流程
 
 ```
-1. 读取当前研究课题
-   - 查看 current-topic.md
-   - 读取 research-topics/[topic-name].md
-   - 了解研究背景和目标
+1. 读取课题注册表
+   - 查看 research/registry.md
+   - 了解所有课题概览和状态
 
-2. 确认研究状态
-   - 检查当前进展
-   - 确认下一步行动
-   - 准备开始研究
+2. 确认当前课题
+   - 查看 research/current-topic.md
+   - 确定课题路径
 
-3. 开始研究循环
-   - 根据状态继续研究
+3. 读取课题内容
+   - 单课题：research/topic.md
+   - 多课题：research/topics/[topic-name]/topic.md
+   - 读取 catch-up.md 快速恢复上下文
+
+4. 开始研究循环
+   - 根据课题状态继续研究
    - 或开始新的SEARCH-R循环
 ```
 
@@ -273,69 +289,197 @@ baidu-scholar-search (Tool)
    - 决定是否需要Human介入
 
 3. 记录研究过程
-   - 更新研究课题进展
-   - 记录会话日志
+   - 更新课题进展（topic.md）
+   - 记录会话日志（session-log.md）
+   - 更新课题注册表（registry.md）
 ```
 
 ### 会话结束
 
 ```
-1. 更新研究进展
-   - 更新 research-topics/[topic-name].md
-   - 记录当前进展和下一步
+1. 更新课题进展
+   - 更新 topic.md（记录当前进展和下一步）
+   - 更新 session-log.md（记录关键决策和产出）
 
-2. 记录会话日志
-   - 更新 session-log.md
-   - 记录关键决策和产出
+2. 生成追更文档
+   - 更新 catch-up.md（便于下次快速恢复）
 
-3. 简单反思
+3. 更新课题注册表
+   - 更新 research/registry.md 中的进度概览
+
+4. 简单反思
    - 反思本次会话
    - 识别改进点
 ```
 
 ---
 
+## 🔐 Git安全管理
+
+**重要**：每次更新仓库时必须严格执行Git安全管理流程。
+
+### ⛔ 强制规则
+
+1. **关键更新必须Commit和Push**
+   - 新增或修改核心配置文件
+   - 新增或修改技能(Skills)
+   - 新增或修改工具(Tools)
+   - 修复重要bug
+   - 完成重要功能开发
+
+2. **禁止提交的内容**
+   - `.env` 文件及所有环境变量文件
+   - 包含API Key、Token、密码的文件
+   - 包含用户专属URL的文件
+   - 临时文件、日志文件
+
+3. **推送前必须检查**
+   - 检查`.gitignore`是否包含敏感文件
+   - 扫描暂存区是否有敏感信息
+   - 确认没有遗漏的敏感信息
+
+### 🔄 标准流程
+
+#### Commit流程
+
+```bash
+# 1. 检查当前状态
+python3 tools/git-management/scripts/git_safe.py check
+
+# 2. 安全提交
+python3 tools/git-management/scripts/git_safe.py commit -m "提交说明"
+```
+
+#### Push流程
+
+```bash
+# 安全推送（会自动检查并生成简报）
+python3 tools/git-management/scripts/git_safe.py push
+```
+
+### 📋 使用示例
+
+```bash
+# 检查当前状态
+python3 tools/git-management/scripts/git_safe.py check
+
+# 提交指定文件
+python3 tools/git-management/scripts/git_safe.py commit \
+  --files "skills/README.md" "tools/git-management/SKILL.md" \
+  -m "新增git-management技能"
+
+# 推送到main分支
+python3 tools/git-management/scripts/git_safe.py push --branch main
+```
+
+### 🔍 敏感信息检测
+
+工具会自动检测以下敏感信息：
+- API Key (百度、通用)
+- Token (PaddleOCR、BCE等)
+- Password
+- Secret Key
+- 专属URL (aistudio-app.com等)
+- Bearer Token
+
+### 📊 简报格式
+
+每次push后会生成推送简报：
+- 推送时间、分支、提交数量
+- 提交内容详情
+- 安全检查结果
+- 统计信息
+- 远程状态
+
+📖 详细文档：[Git安全管理工具](../../tools/git-management/README.md)
+
+---
+
 ## 📁 文件结构
+
+### SEARCH-R 框架模板
 
 ```
 SEARCH-R/
-├── agents/research/
-│   ├── AGENTS.md              # 本文件：Agent核心定义
-│   ├── init.md                # 研究课题初始化指南
-│   └── ESSENTIALS.md          # 核心要点速查
+├── agents/research/              # Agent定义层
+│   ├── AGENTS.md                 # 本文件：Agent核心定义
+│   ├── init.md                   # 研究课题初始化指南
+│   ├── ESSENTIALS.md             # 核心要点速查
+│   └── skills/                   # 技能库
 │
-├── skills/                    # 业务能力（Skills）
-│   ├── README.md              # Skills库索引
-│   ├── literature-review/     # 文献检索
-│   ├── observation/           # 观察记录
-│   ├── theory-building/       # 理论构建
-│   └── quality-gate/          # 质量门控
+├── research/                     # 研究内容层
+│   ├── registry.md               # 课题注册表模板
+│   ├── current-topic.md          # 当前课题引用模板
+│   └── templates/                # 课题模板
+│       ├── topic-template.md
+│       └── registry-template.md
 │
-├── tools/                     # 底层工具
-│   ├── README.md              # Tools库索引
-│   ├── baidu-search/          # 百度搜索
-│   ├── baidu-scholar-search/  # 百度学术
-│   ├── baidu-baike-data/      # 百度百科
-│   ├── paddleocr-doc-parsing/     # 文档解析
-│   ├── paddleocr-text-recognition/ # 文字识别
-│   ├── paddleocr-async/       # 异步OCR
-│   ├── file-reading/          # 文件阅读
-│   ├── document-output/       # 文档输出
-│   └── init-research.sh       # 项目初始化脚本
+├── methodology/                  # 方法论体系
+│   ├── search-r-cycle.md         # SEARCH-R循环详解
+│   ├── research-depth.md         # 研究深度定义
+│   └── human-role.md             # Human角色定义
 │
-├── methodology/               # 方法论体系
-│   ├── search-r-cycle.md      # SEARCH-R循环详解
-│   ├── research-depth.md      # 研究深度定义
-│   └── human-role.md          # Human角色定义
-│
-├── templates/                 # 文档模板
+├── templates/                    # 文档模板
 │   ├── observation-template.md
 │   ├── retrieval-template.md
 │   ├── theory-template.md
 │   └── reflection-template.md
 │
-└── research-instances/        # 研究实例注册表
-    └── README.md
+└── tools/                        # 工具集
+    └── init-research.sh          # 项目初始化脚本
+```
+
+### 单课题研究项目实例
+
+```
+my-research/
+├── agents/research/              # Agent定义（从SEARCH-R复制）
+│   └── ...
+│
+├── research/                     # 研究内容
+│   ├── registry.md               # 课题注册表
+│   ├── current-topic.md          # 当前课题引用
+│   ├── topic.md                  # 课题定义
+│   ├── catch-up.md               # 追更文档
+│   ├── session-log.md            # 会话日志
+│   ├── observations/             # 观察笔记
+│   ├── retrievals/               # 检索报告
+│   ├── theory/                   # 理论文档
+│   ├── reflections/              # 反思笔记
+│   └── references/               # 参考资料
+│
+├── methodology/                  # 方法论
+├── templates/                    # 文档模板
+└── opencode.json                 # 项目配置
+```
+
+### 多课题研究项目实例
+
+```
+my-research/
+├── agents/research/              # Agent定义
+│   └── ...
+│
+├── research/                     # 研究内容
+│   ├── registry.md               # 课题注册表
+│   ├── current-topic.md          # 当前激活课题
+│   │
+│   └── topics/                   # 课题目录
+│       ├── agent-memory/         # 课题1
+│       │   ├── topic.md
+│       │   ├── catch-up.md
+│       │   ├── session-log.md
+│       │   ├── observations/
+│       │   ├── theory/
+│       │   └── ...
+│       │
+│       └── agent-metacognition/  # 课题2
+│           ├── topic.md
+│           └── ...
+│
+├── methodology/
+├── templates/
+└── opencode.json
 ```
 
 ## 🔗 关键文档索引
@@ -346,25 +490,12 @@ SEARCH-R/
 - [Human角色定义](../../methodology/human-role.md) - Human双重角色和参与最小化
 
 ### 技能库
-- [Skills库索引](skills/README.md) - 业务能力完整索引
-  - [文献检索能力](skills/literature-review/SKILL.md) - 系统化文献检索
-  - [观察能力](skills/observation/SKILL.md) - 系统化观察记录
-  - [理论构建能力](skills/theory-building/SKILL.md) - 构建验证理论
-  - [质量门控能力](skills/quality-gate/SKILL.md) - 评估研究质量
-
-### 工具库
-- [Tools库索引](tools/README.md) - 底层工具完整索引
-- **百度系列**
-  - [百度搜索](tools/baidu-search/SKILL.md) - 百度AI搜索
-  - [百度学术](tools/baidu-scholar-search/SKILL.md) - 学术文献检索
-  - [百度百科](tools/baidu-baike-data/SKILL.md) - 词条查询
-- **PaddleOCR系列**
-  - [文档解析](tools/paddleocr-doc-parsing/SKILL.md) - 高级文档解析
-  - [文字识别](tools/paddleocr-text-recognition/SKILL.md) - 图像OCR
-  - [异步OCR](tools/paddleocr-async/SKILL.md) - 异步API调用
-- **通用工具**
-  - [文件阅读](tools/file-reading/SKILL.md) - 读取多种格式文件（建设中）
-  - [文档输出](tools/document-output/SKILL.md) - 生成格式化文档（建设中）
+- [Skills库索引](skills/README.md) - 所有可用技能的完整索引
+- [文献检索能力](skills/literature-review.md) - 系统化文献检索
+- [观察能力](skills/observation.md) - 系统化观察记录
+- [理论构建能力](skills/theory-building.md) - 构建验证理论
+- [质量门控能力](skills/quality-gate.md) - 评估研究质量
+- [百度搜索能力](skills/baidu-search.md) - 实时信息检索
 
 ### 模板文档
 - [文档模板库](../../templates/) - 所有标准文档模板
@@ -478,6 +609,18 @@ SEARCH-R/
 
 ## 📝 版本历史
 
+- **v2.0** (2026-03-16) - 目录结构重构
+  - 明确agents/只放Agent定义
+  - 明确research/放所有研究内容
+  - 支持单课题和多课题两种模式
+  - 新增课题注册表（registry.md）机制
+  - 每个课题拥有完整的文档体系
+
+- **v1.3** (2026-03-14) - Git安全管理集成
+  - 新增git-management技能
+  - 强制执行Git安全管理流程
+  - 敏感信息审查机制
+
 - **v1.2** (2026-03-08) - 文档迁移与整理
   - 迁移理论文档到 theory/ 目录
   - 迁移反思文档到 reflections/ 目录
@@ -497,6 +640,6 @@ SEARCH-R/
 ---
 
 **维护者**: SEARCH-R Framework  
-**更新时间**: 2026-03-08  
+**更新时间**: 2026-03-16  
 **文档类型**: Agent核心定义  
 **Token目标**: ~5k tokens

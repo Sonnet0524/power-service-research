@@ -1,5 +1,5 @@
 ---
-topic: 现场供电服务研究
+current_topic: 现场供电服务研究
 activated: 2026-03-16
 ---
 
@@ -9,7 +9,11 @@ activated: 2026-03-16
 
 **状态**: active
 
-**配置文件**: [research-topics/field-power-service.md](research-topics/field-power-service.md)
+**配置文件**: [../research/topic.md](../research/topic.md)
+
+**说明**: 
+- 课题注册表位于 [../research/registry.md](../research/registry.md)
+- 当前课题引用位于 [../research/current-topic.md](../research/current-topic.md)
 
 ---
 
@@ -18,9 +22,9 @@ activated: 2026-03-16
 | 项目 | 内容 |
 |------|------|
 | **当前阶段** | Survey (观察调研) |
-| **完成度** | 0% |
+| **完成度** | 30% |
 | **优先级** | high |
-| **核心问题** | 待完善 |
+| **核心问题** | 驻点工作完备性、价值挖掘、关系梳理、提升路径 |
 
 ---
 
@@ -28,10 +32,13 @@ activated: 2026-03-16
 
 ### 已完成
 - [2026-03-16] 创建研究项目
+- [2026-03-16] 理解研究对象：《2026年武侯供电中心现场驻点工作任务清单》
+- [2026-03-16] 明确三大核心研究问题
+- [2026-03-16] 分析《营销稽查管控作业指导书》
 
 ### 下一步
-1. 完善研究背景和核心问题
-2. 开始Survey阶段的调研
+1. 总结Survey阶段发现
+2. 进入Explore阶段：检索供电服务相关文献
 
 ---
 
